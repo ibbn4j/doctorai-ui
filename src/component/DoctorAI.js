@@ -5,7 +5,6 @@ import { Loading } from 'react-simple-chatbot';
 import { LexRuntimeV2Client, RecognizeTextCommand } from "@aws-sdk/client-lex-runtime-v2";
 import Speech from 'speak-tts'
 
-// import env from '../config'
 require('dotenv').config()
 
 const speech = new Speech()
@@ -45,16 +44,16 @@ class DoctorAI extends Component {
     const search = steps.user.value;
 
     const lexParams = {
-      credentials: {accessKeyId: process.env.LEX_ACCESS_KEY, secretAccessKey: process.env.LEX_SECRET},
-      userId: process.env.LEX_USERID, 
-      region: process.env.LEX_REGION
+      credentials: {accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY, secretAccessKey: process.env.REACT_APP_AWS_SECRET},
+      userId: process.env.REACT_APP_AWS_USERID, 
+      region: process.env.REACT_APP_AWS_REGION
     };
 
     const input = {
-        botAliasId: process.env.LEX_botAliasId,
-        botId: process.env.LEX_botId,
-        localeId: process.env.LEX_localeId,
-        sessionId: process.env.LEX_sessionId,
+        botAliasId: process.env.REACT_APP_LEX_botAliasId,
+        botId: process.env.REACT_APP_LEX_botId,
+        localeId: process.env.REACT_APP_LEX_localeId,
+        sessionId: process.env.REACT_APP_LEX_sessionId,
         requestContentType: 'text/plain; charset=utf-8',
         text: search
     }
