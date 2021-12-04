@@ -76,9 +76,17 @@ class DoctorAI extends Component {
       }
 
       self.setState({ loading: false, result: textToSpeak });
-      speech.speak({ text: textToSpeak })
-        .then(() => { console.log("Success !") })
-        .catch(e => { console.error("An error occurred :", e) })
+
+      if (textToSpeak.length > 200) {
+        speech.speak({ text: "Please find the information below" })
+          .then(() => { console.log("Success !") })
+          .catch(e => { console.error("An error occurred :", e) })
+      } else {
+        speech.speak({ text: textToSpeak })
+          .then(() => { console.log("Success !") })
+          .catch(e => { console.error("An error occurred :", e) })
+      }
+      
     }
     callAsync();
   }
@@ -96,10 +104,15 @@ class DoctorAI extends Component {
 
   render() {
     const { loading, result } = this.state;
+    const lines = result.split("\n");
+    const elements = [];
+    for (const [index, value] of lines.entries()) {
+      elements.push(<span>{value}<br/></span>)
+    }
 
     return (
       <div className="bot-response">
-        { loading ? <Loading /> : result }
+        { loading ? <Loading /> : elements }
       </div>
     );
   }

@@ -46,12 +46,12 @@ const steps = [
 
 function App() {
   let chatbot = <ChatBot
-    steps={steps}  
+    steps={steps}
     headerTitle="Doctor.ai"
     botAvatar="doctor.ai_trans.png"
     userAvatar="user.png"
     recognitionEnable={true}
-    width="350px"
+    width="450px"
     speechSynthesis={{ enable: false, lang: 'en' }}
   />
 
