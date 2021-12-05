@@ -1,4 +1,4 @@
-# Welcome to Doctor.ai React Frontend 
+# Welcome to Doctor.ai React Front-end 
 
 This is the React front-end app for Doctor.ai, our proud submission to the SINGAPORE HEALTHCARE AI DATATHON AND EXPO 2021 (https://www.nus-datathon.com/).
 
