@@ -7,14 +7,15 @@ import Speech from 'speak-tts'
 
 require('dotenv').config()
 
+const CONFIDENTIAL = "[CONFIDENTIAL]";
 const speech = new Speech()
 
 speech.init({
     'volume': 1,
-     'lang': 'en-GB',
+     'lang': 'en-US',
      'rate': 1,
      'pitch': 1,
-     'voice':'Google UK English Male',
+     'voice':'Google US English Male',
      'splitSentences': true,
      'listeners': {
          'onvoiceschanged': (voices) => {
@@ -65,9 +66,11 @@ class DoctorAI extends Component {
     async function callAsync() {
       let textToSpeak = ''
       try {
-        const response = await client.send(command);
-        textToSpeak = response.messages[0].content;
-        console.log('Doctor AI:' + textToSpeak);
+        if (search) {
+          const response = await client.send(command);
+          textToSpeak = response.messages[0].content;
+          console.log('Doctor AI:' + textToSpeak);
+        }
       }
       catch (error) {
         console.error(error)
@@ -75,9 +78,15 @@ class DoctorAI extends Component {
         textToSpeak = "Sorry I can't answer that. Could you please try again?"
       }
 
+      let isConfidential = false;
+      if (textToSpeak.startsWith(CONFIDENTIAL)) {
+        isConfidential = true;
+        textToSpeak = textToSpeak.substring(CONFIDENTIAL.length)
+      }
+
       self.setState({ loading: false, result: textToSpeak });
 
-      if (textToSpeak.length > 200) {
+      if (isConfidential || textToSpeak.length > 100) {
         speech.speak({ text: "Please find the information below" })
           .then(() => { console.log("Success !") })
           .catch(e => { console.error("An error occurred :", e) })
@@ -107,7 +116,7 @@ class DoctorAI extends Component {
     const lines = result.split("\n");
     const elements = [];
     for (const [index, value] of lines.entries()) {
-      elements.push(<span>{value}<br/></span>)
+      elements.push(<span key={index}>{value}<br/></span>)
     }
 
     return (
