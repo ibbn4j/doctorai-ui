@@ -12,10 +12,10 @@ const speech = new Speech()
 
 speech.init({
     'volume': 1,
-     'lang': 'en-US',
+     'lang': 'en-GB',
      'rate': 1,
      'pitch': 1,
-     'voice':'Google US English Male',
+     'voice':'Google UK English Male',
      'splitSentences': true,
      'listeners': {
          'onvoiceschanged': (voices) => {
@@ -81,12 +81,12 @@ class DoctorAI extends Component {
       let isConfidential = false;
       if (textToSpeak.startsWith(CONFIDENTIAL)) {
         isConfidential = true;
-        textToSpeak = textToSpeak.substring(CONFIDENTIAL.length)
+        // textToSpeak = textToSpeak.substring(CONFIDENTIAL.length)
       }
 
       self.setState({ loading: false, result: textToSpeak });
 
-      if (isConfidential || textToSpeak.length > 100) {
+      if (isConfidential || textToSpeak.length > 115) {
         speech.speak({ text: "Please find the information below" })
           .then(() => { console.log("Success !") })
           .catch(e => { console.error("An error occurred :", e) })
